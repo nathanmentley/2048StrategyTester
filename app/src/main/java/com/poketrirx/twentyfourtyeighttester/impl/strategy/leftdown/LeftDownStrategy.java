@@ -2,6 +2,7 @@ package com.poketrirx.twentyfourtyeighttester.impl.strategy.leftdown;
 
 import com.poketrirx.twentyfourtyeighttester.pub.models.Board;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Move;
+import com.poketrirx.twentyfourtyeighttester.pub.simulation.GameLogic;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
 public class LeftDownStrategy implements Strategy {
@@ -12,18 +13,18 @@ public class LeftDownStrategy implements Strategy {
     }
 
     @Override
-    public Move next(Board board) {
-        if (!board.isMoveValid(Move.Left) && board.isMoveValid(Move.Down)) {
+    public Move next(GameLogic gameLogic, Board board) {
+        if (!gameLogic.isMoveValid(board, Move.Left) && gameLogic.isMoveValid(board, Move.Down)) {
             //if we can't move left, but can move down. lets move down.
             return Move.Down;
         }
-        else if (board.isMoveValid(Move.Left) && !board.isMoveValid(Move.Down)) {
+        else if (gameLogic.isMoveValid(board, Move.Left) && !gameLogic.isMoveValid(board, Move.Down)) {
             //if we can't move down, but can move left. lets move left.
             return Move.Left;
         }
-        else if (!board.isMoveValid(Move.Left) && !board.isMoveValid(Move.Down)) {
+        else if (!gameLogic.isMoveValid(board, Move.Left) && !gameLogic.isMoveValid(board, Move.Down)) {
             //If we can't move either direction lets just try whatever we can move:
-            return board.isMoveValid(Move.Right) ?
+            return gameLogic.isMoveValid(board, Move.Right) ?
                 Move.Right:
                 Move.Up;
         }

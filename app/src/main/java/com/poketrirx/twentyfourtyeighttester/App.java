@@ -3,6 +3,7 @@
  */
 package com.poketrirx.twentyfourtyeighttester;
 
+import com.poketrirx.twentyfourtyeighttester.impl.simulator.GameLogicImpl;
 import com.poketrirx.twentyfourtyeighttester.impl.simulator.SimulatorImpl;
 import com.poketrirx.twentyfourtyeighttester.impl.strategy.leftdown.LeftDownStrategy;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Summary;
@@ -11,7 +12,7 @@ import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
 public class App {
     public static void main(String[] args) {
-        Simulator simulator = new SimulatorImpl();
+        Simulator simulator = new SimulatorImpl(new GameLogicImpl());
         Strategy strategy = new LeftDownStrategy();
 
         Summary summary = simulator.simulate(strategy);

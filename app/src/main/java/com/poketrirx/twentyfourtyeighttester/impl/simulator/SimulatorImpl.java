@@ -1,12 +1,14 @@
 package com.poketrirx.twentyfourtyeighttester.impl.simulator;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.poketrirx.twentyfourtyeighttester.pub.models.Board;
 import com.poketrirx.twentyfourtyeighttester.pub.models.ImmutableMatrix;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Move;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Space;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Summary;
+import com.poketrirx.twentyfourtyeighttester.pub.simulation.GameLogic;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.Simulator;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
@@ -41,6 +43,12 @@ public class SimulatorImpl implements Simulator {
             )
         );
 
+    private final GameLogic gameLogic;
+
+    public SimulatorImpl(GameLogic gameLogic) {
+        this.gameLogic = Objects.requireNonNull(gameLogic);
+    }
+
     @Override
     public Summary simulate(Strategy strategy) {
         Board board = runGame(strategy);
@@ -58,14 +66,14 @@ public class SimulatorImpl implements Simulator {
             .values(EMPTY_BOARD)
             .build();
 
-        while (!board.isGameOver()) {
-            Move move = strategy.next(board);
+        while (!gameLogic.isGameOver(board)) {
+            Move move = strategy.next(gameLogic, board);
 
-            if (!board.isMoveValid(move)) {
+            if (!gameLogic.isMoveValid(board, move)) {
                 break;
             }
 
-            board = board.getBoardForNextMove(move);
+            board = gameLogic.getBoardForNextMove(board, move);
         }
 
         return board;
