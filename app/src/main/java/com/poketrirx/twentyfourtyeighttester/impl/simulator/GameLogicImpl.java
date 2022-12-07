@@ -85,7 +85,7 @@ public class GameLogicImpl implements GameLogic {
 
         //Move all items down
         for (int x = 0; x < board.getSize(); x++)
-        for(int y =  - 1; y >= 0; y--) {
+        for(int y = board.getSize() - 1; y >= 0; y--) {
             if (newValues.get(x).get(y).getValue() == 0) {
                 Collections.swap(newValues.get(x), 0, y);
             }
@@ -93,7 +93,7 @@ public class GameLogicImpl implements GameLogic {
 
         //Merge an tiles that need merging.
         for (int x = 0; x < board.getSize(); x++)
-        for(int y =  - 1; y > 0; y--) {
+        for(int y = board.getSize() - 1; y > 0; y--) {
             int target = y - 1;
 
             if (newValues.get(x).get(y).getValue() == newValues.get(x).get(target).getValue()) {
@@ -121,7 +121,7 @@ public class GameLogicImpl implements GameLogic {
 
         //Move all items down
         for (int x = 0; x < board.getSize(); x++)
-        for(int y =  - 1; y >= 0; y--) {
+        for(int y = board.getSize() - 1; y >= 0; y--) {
             if (newValues.get(x).get(y).getValue() == 0) {
                 Collections.swap(newValues.get(x), 0, y);
             }
