@@ -4,5 +4,5 @@ import com.poketrirx.twentyfourtyeighttester.pub.models.Summary;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
 public interface Simulator {
-    Summary simulate(Strategy strategy);
+    Summary simulate(Strategy strategy, int size);
 }

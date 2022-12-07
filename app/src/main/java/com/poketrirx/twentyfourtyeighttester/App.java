@@ -15,16 +15,20 @@ public class App {
         Simulator simulator = new SimulatorImpl(new GameLogicImpl());
         Strategy strategy = new LeftDownStrategy();
 
-        Summary summary = simulator.simulate(strategy);
+        int size = 4;
 
-        printSummary(strategy.getName(), summary);
+        Summary summary = simulator.simulate(strategy, size);
+
+        printSummary(strategy.getName(), summary, size);
     }
 
-    private static void printSummary(String name, Summary summary) {
+    private static void printSummary(String name, Summary summary, int size) {
         System.out.println(name);
 
         System.out.println(String.format("Max Block Size: %s", summary.getMaxBlockSize()));
         System.out.println(String.format("Max Score: %s", summary.getMaxScore()));
+        System.out.println(String.format("Total Rounds: %s", summary.getTotalRounds()));
+        System.out.println(String.format("Board Size: %s", size));
         System.out.println();
     }
 }

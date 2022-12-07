@@ -19,4 +19,8 @@ public class Summary {
     @Getter
     @Builder.Default
     private final long maxBlockSize = 0;
+
+    @Getter
+    @Builder.Default
+    private final long totalRounds = 0;
 }
