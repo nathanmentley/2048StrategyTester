@@ -5,11 +5,6 @@ package com.poketrirx.twentyfourtyeighttester;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import com.poketrirx.twentyfourtyeighttester.impl.simulator.GameLogicImpl;
