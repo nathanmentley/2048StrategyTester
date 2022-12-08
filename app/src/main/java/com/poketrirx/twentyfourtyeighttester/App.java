@@ -11,6 +11,7 @@ import com.poketrirx.twentyfourtyeighttester.impl.simulator.GameLogicImpl;
 import com.poketrirx.twentyfourtyeighttester.impl.simulator.SimulatorImpl;
 import com.poketrirx.twentyfourtyeighttester.impl.strategy.leftdown.LeftDownStrategy;
 import com.poketrirx.twentyfourtyeighttester.pub.models.GameSummary;
+import com.poketrirx.twentyfourtyeighttester.pub.models.Summary;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.Simulator;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
@@ -18,27 +19,42 @@ public class App {
     public static void main(String[] args) {
         Simulator simulator = new SimulatorImpl(new GameLogicImpl());
         Strategy strategy = new LeftDownStrategy();
+        int size = 5;
+        int totalSimulations = 100;
 
-        int size = 7;
+        List<GameSummary> summaries = runSimulations(simulator, strategy, size, totalSimulations);
 
+        Summary results = buildSummary(summaries);
+
+        printSummary(strategy.getName(), results, size, totalSimulations);
+    }
+
+    private static List<GameSummary> runSimulations(Simulator simulator, Strategy strategy, int size, int totalSimulations) {
         List<GameSummary> summaries = new ArrayList<GameSummary>();
 
-        IntStream.range(0, 100).forEachOrdered(n -> {
+        IntStream.range(0, totalSimulations).forEachOrdered(n -> {
             GameSummary summary = simulator.simulate(strategy, size);
 
             summaries.add(summary);
         });
 
-        printSummary(strategy.getName(), summaries, size);
+        return summaries;
     }
 
-    private static void printSummary(String name, List<GameSummary> summaries, int size) {
-        System.out.println(name);
+    private static Summary buildSummary(List<GameSummary> summaries) {
+        return Summary.builder()
+            .maxBlockSize(summaries.stream().mapToDouble(summary -> summary.getMaxBlockSize()).average().orElse(0))
+            .maxScore(summaries.stream().mapToDouble(summary -> summary.getMaxScore()).average().orElse(0))
+            .totalRounds(summaries.stream().mapToDouble(summary -> summary.getTotalRounds()).average().orElse(0))
+            .build();
+    }
 
-        System.out.println(String.format("Max Block Size: %s", summaries.stream().mapToDouble(summary -> summary.getMaxBlockSize()).average().orElse(0)));
-        System.out.println(String.format("Max Score: %s", summaries.stream().mapToDouble(summary -> summary.getMaxScore()).average().orElse(0)));
-        System.out.println(String.format("Total Rounds: %s", summaries.stream().mapToDouble(summary -> summary.getTotalRounds()).average().orElse(0)));
+    private static void printSummary(String name, Summary results, int size, int totalSimulations) {
+        System.out.println(String.format("Strategy Name: %s", name));
+        System.out.println(String.format("Max Block Size: %s", results.getMaxBlockSize()));
+        System.out.println(String.format("Max Score: %s", results.getMaxScore()));
+        System.out.println(String.format("Total Rounds: %s", results.getTotalRounds()));
         System.out.println(String.format("Board Size: %s", size));
-        System.out.println();
+        System.out.println(String.format("Total Simulations: %s", totalSimulations));
     }
 }
