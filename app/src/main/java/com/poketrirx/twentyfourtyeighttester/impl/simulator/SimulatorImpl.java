@@ -9,7 +9,7 @@ import com.poketrirx.twentyfourtyeighttester.pub.models.Board;
 import com.poketrirx.twentyfourtyeighttester.pub.models.ImmutableMatrix;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Move;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Space;
-import com.poketrirx.twentyfourtyeighttester.pub.models.Summary;
+import com.poketrirx.twentyfourtyeighttester.pub.models.GameSummary;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.GameLogic;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.Simulator;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
@@ -25,10 +25,10 @@ public class SimulatorImpl implements Simulator {
     }
 
     @Override
-    public Summary simulate(Strategy strategy, int size) {
+    public GameSummary simulate(Strategy strategy, int size) {
         Board board = runGame(strategy, size);
 
-        return Summary.builder()
+        return GameSummary.builder()
             .maxBlockSize(board.getCurrentLargestBlock())
             .maxScore(board.getCurrentScore())
             .totalRounds(board.getRound())

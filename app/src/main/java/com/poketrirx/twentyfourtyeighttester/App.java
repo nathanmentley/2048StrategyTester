@@ -3,10 +3,19 @@
  */
 package com.poketrirx.twentyfourtyeighttester;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
+
 import com.poketrirx.twentyfourtyeighttester.impl.simulator.GameLogicImpl;
 import com.poketrirx.twentyfourtyeighttester.impl.simulator.SimulatorImpl;
 import com.poketrirx.twentyfourtyeighttester.impl.strategy.leftdown.LeftDownStrategy;
-import com.poketrirx.twentyfourtyeighttester.pub.models.Summary;
+import com.poketrirx.twentyfourtyeighttester.pub.models.GameSummary;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.Simulator;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
@@ -15,19 +24,25 @@ public class App {
         Simulator simulator = new SimulatorImpl(new GameLogicImpl());
         Strategy strategy = new LeftDownStrategy();
 
-        int size = 4;
+        int size = 7;
 
-        Summary summary = simulator.simulate(strategy, size);
+        List<GameSummary> summaries = new ArrayList<GameSummary>();
 
-        printSummary(strategy.getName(), summary, size);
+        IntStream.range(0, 100).forEachOrdered(n -> {
+            GameSummary summary = simulator.simulate(strategy, size);
+
+            summaries.add(summary);
+        });
+
+        printSummary(strategy.getName(), summaries, size);
     }
 
-    private static void printSummary(String name, Summary summary, int size) {
+    private static void printSummary(String name, List<GameSummary> summaries, int size) {
         System.out.println(name);
 
-        System.out.println(String.format("Max Block Size: %s", summary.getMaxBlockSize()));
-        System.out.println(String.format("Max Score: %s", summary.getMaxScore()));
-        System.out.println(String.format("Total Rounds: %s", summary.getTotalRounds()));
+        System.out.println(String.format("Max Block Size: %s", summaries.stream().mapToDouble(summary -> summary.getMaxBlockSize()).average().orElse(0)));
+        System.out.println(String.format("Max Score: %s", summaries.stream().mapToDouble(summary -> summary.getMaxScore()).average().orElse(0)));
+        System.out.println(String.format("Total Rounds: %s", summaries.stream().mapToDouble(summary -> summary.getTotalRounds()).average().orElse(0)));
         System.out.println(String.format("Board Size: %s", size));
         System.out.println();
     }

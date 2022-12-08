@@ -11,7 +11,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Summary {
+public class GameSummary {
     @Getter
     @Builder.Default
     private final long maxScore = 0;
