@@ -5,7 +5,7 @@ import com.poketrirx.twentyfourtyeighttester.pub.models.Move;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.GameLogic;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
-public class LeftDownStrategy implements Strategy {
+final class LeftDownStrategy implements Strategy {
     @Override
     public String getName() {
         //A unique name for the strategy so we know what to call it in reports.

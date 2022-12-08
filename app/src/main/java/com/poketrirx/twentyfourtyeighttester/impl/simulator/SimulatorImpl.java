@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import com.google.inject.Inject;
+
 import com.poketrirx.twentyfourtyeighttester.pub.models.Board;
 import com.poketrirx.twentyfourtyeighttester.pub.models.ImmutableMatrix;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Move;
@@ -14,12 +16,13 @@ import com.poketrirx.twentyfourtyeighttester.pub.simulation.GameLogic;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.Simulator;
 import com.poketrirx.twentyfourtyeighttester.pub.strategy.Strategy;
 
-public class SimulatorImpl implements Simulator {
+final class SimulatorImpl implements Simulator {
     private static final Space EMPTY_SPACE =
         Space.builder().value(0).build();
 
     private final GameLogic gameLogic;
 
+    @Inject
     public SimulatorImpl(GameLogic gameLogic) {
         this.gameLogic = Objects.requireNonNull(gameLogic);
     }

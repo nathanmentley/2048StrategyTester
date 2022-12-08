@@ -11,7 +11,7 @@ import com.poketrirx.twentyfourtyeighttester.pub.models.Move;
 import com.poketrirx.twentyfourtyeighttester.pub.models.Space;
 import com.poketrirx.twentyfourtyeighttester.pub.simulation.GameLogic;
 
-public class GameLogicImpl implements GameLogic {
+ final class GameLogicImpl implements GameLogic {
     private static final Space EMPTY_SPACE =
         Space.builder()
             .value(0)
